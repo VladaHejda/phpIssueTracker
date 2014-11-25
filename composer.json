@@ -1,0 +1,12 @@
+{
+	"name": "vladahejda/phpissuetracker",
+	"description": "PHP Bug / Issue Tracker",
+	"keywords": ["tracker"],
+	"license": ["GPL-3.0+"],
+	"authors": [
+		{
+			"name": "Vladislav Hejda",
+			"homepage": "http://hejdav.cz"
+		}
+	]
+}
