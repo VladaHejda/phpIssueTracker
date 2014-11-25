@@ -9,6 +9,7 @@ $login = '';
 $password = '';
 
 $tasksLimit = 20;
+$maxCreatePerDay = 5;
 $template = 'default';
 
 $backLink = '/';

@@ -27,6 +27,11 @@ $title = (empty($projectTitle) ? '' : "{$projectTitle} ") . 'PHP Issue Tracker';
 if (!empty($_GET['issue'])) {
 	$view = 'issue';
 	require __DIR__ . '/issue.php';
+
+} elseif (isset($_GET['new'])) {
+	$view = 'new';
+	require __DIR__ . '/new.php';
+
 } else {
 	$view = 'list';
 	require __DIR__ . '/list.php';

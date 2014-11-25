@@ -50,11 +50,7 @@ if (!empty($conditions)) {
 	$conditions = sprintf('WHERE %s', $conditions);
 }
 
-$labelsData = $pdo->query('SELECT label, color FROM labels')->fetchAll();
-$labels = array();
-foreach ($labelsData as $label) {
-	$labels[$label->label] = $label;
-}
+$labels = $pdo->query('SELECT label, color FROM labels')->fetchAll();
 
 $query = "SELECT %s FROM tasks
 	LEFT JOIN tasks_labels ON (tasks.id = tasks_labels.task_id)

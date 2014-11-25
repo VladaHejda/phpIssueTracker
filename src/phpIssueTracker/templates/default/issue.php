@@ -2,6 +2,8 @@
 	back to issue list
 </a></div>
 
+<h2 class="block heading">Issue "<?php echo $issue->task; ?>"</h2>
+
 <table class="block issue-detail">
 	<tr>
 		<th>Issue:</th>

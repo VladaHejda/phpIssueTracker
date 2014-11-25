@@ -10,6 +10,9 @@
 		table td, table th { border: 1px solid #000; padding: 2px 3px; }
 		table th { text-align: left; }
 		h1 a { text-decoration: none; color: #aa778b; }
+		.protect { display: none; }
+		.error { color: #900; }
+		.heading { color: #8929aa; }
 		.block { float: left; clear: left; margin-top: 15px; }
 		.block-prefix { float: left; width: 60px; font-size: 1.2em; }
 		.block-content { float: left; }
@@ -30,6 +33,10 @@
 		.paginator .list .paginator-anchor { display: block; padding: 3px 5px; text-decoration: none;
 			background: #000; color: #fff; }
 		.paginator li.selected .paginator-anchor {  background: #ccc; color: #000; }
+		.issue-new-main th, .issue-new-main td { border: none; }
+		.issue-new-main th { vertical-align: top; }
+		.issue-new-task, .issue-new-description { width: 400px; border: 1px solid #aaa; }
+		.issue-new-description { height: 80px; }
 	</style>
 </head>
 <body>
@@ -58,7 +65,7 @@
 
 <footer>
 	<div class="footer-copyright">
-		<a href="https://github.com/VladaHejda" target="_blank">PHP Issue Tracker</a>
+		<a href="https://github.com/VladaHejda/phpIssueTracker" target="_blank">PHP Issue Tracker</a>
 	</div>
 </footer>
 

@@ -1,9 +1,15 @@
+<div class="block tasks-manage">
+	<a href="?new">new issue</a>
+</div>
+
+
+<h2 class="block heading">Issue list</h2>
+
 <div class="block">
 	<h2 class="block-prefix">Label:</h2>
 	<ul class="block-content labels-list">
 	<?php foreach ($labels as $label) { ?>
-		<li class="list" style="background: #<?php echo $label->color; ?>;"<?php
-			echo isSelected('label', $label->label) ? ' class="selected"' : '' ;?>>
+		<li class="list<?php echo isSelected('label', $label->label) ? ' selected' : ''; ?>" style="background: #<?php echo $label->color; ?>;">
 			<a href="<?php echo renderListQuery('label', $label->label); ?>">
 				<span><?php echo $label->label; ?></span>
 			</a>
