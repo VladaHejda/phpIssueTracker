@@ -7,6 +7,7 @@
 $dsn = 'mysql:host=localhost;dbname=issues';
 $login = '';
 $password = '';
+$tables_prefix = '';
 
 $tasksLimit = 20;
 $maxCreatePerDay = 5;

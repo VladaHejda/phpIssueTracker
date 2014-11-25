@@ -50,14 +50,14 @@ if (!empty($conditions)) {
 	$conditions = sprintf('WHERE %s', $conditions);
 }
 
-$labels = $pdo->query('SELECT label, color FROM labels')->fetchAll();
+$labels = $pdo->query("SELECT label, color FROM {$tables_prefix}labels")->fetchAll();
 
-$query = "SELECT %s FROM tasks
-	LEFT JOIN tasks_labels ON (tasks.id = tasks_labels.task_id)
-	LEFT JOIN labels ON (tasks_labels.label_id = labels.id)
+$query = "SELECT %s FROM {$tables_prefix}tasks
+	LEFT JOIN {$tables_prefix}tasks_labels ON ({$tables_prefix}tasks.id = {$tables_prefix}tasks_labels.task_id)
+	LEFT JOIN {$tables_prefix}labels ON ({$tables_prefix}tasks_labels.label_id = {$tables_prefix}labels.id)
 	{$conditions} %s";
 
-$statement = $pdo->prepare(sprintf($query, 'COUNT(DISTINCT tasks.id)', ''));
+$statement = $pdo->prepare(sprintf($query, "COUNT(DISTINCT {$tables_prefix}tasks.id)", ''));
 $statement->execute($args);
 $count = $statement->fetchColumn();
 
@@ -70,14 +70,14 @@ if ($count) {
 		$pagesCount = ceil($count / $tasksLimit);
 	}
 
-	$statement = $pdo->prepare(sprintf($query, "tasks.id, task, state, updated",
-		sprintf('GROUP BY tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d', $tasksLimit, $offset)));
+	$statement = $pdo->prepare(sprintf($query, "{$tables_prefix}tasks.id, task, state, updated",
+		sprintf("GROUP BY {$tables_prefix}tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d", $tasksLimit, $offset)));
 	$statement->execute($args);
 	$tasks = $statement->fetchAll();
 	foreach ($tasks as & $task) {
-		$statement = $pdo->prepare('SELECT label, color FROM tasks_labels
-			LEFT JOIN labels ON (tasks_labels.label_id = labels.id)
-			WHERE task_id = ?');
+		$statement = $pdo->prepare("SELECT label, color FROM {$tables_prefix}tasks_labels
+			LEFT JOIN {$tables_prefix}labels ON ({$tables_prefix}tasks_labels.label_id = {$tables_prefix}labels.id)
+			WHERE task_id = ?");
 		$statement->execute(array($task->id));
 		$task->labels = $statement->fetchAll();
 		$task->updated = new DateTime($task->updated);
