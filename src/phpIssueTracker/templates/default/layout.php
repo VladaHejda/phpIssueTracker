@@ -33,6 +33,8 @@
 		.paginator .list .paginator-anchor { display: block; padding: 3px 5px; text-decoration: none;
 			background: #000; color: #fff; }
 		.paginator li.selected .paginator-anchor {  background: #ccc; color: #000; }
+		.issue-detail th { vertical-align: top; }
+		.issue-description { font-family: "Courier New", Courier; }
 		.issue-new-main th, .issue-new-main td { border: none; }
 		.issue-new-main th { vertical-align: top; }
 		.issue-new-task, .issue-new-description { width: 400px; border: 1px solid #aaa; }

@@ -7,7 +7,7 @@
 <table class="block issue-detail">
 	<tr>
 		<th>Issue:</th>
-		<td><?php echo $issue->task; ?></td>
+		<td><?php echo htmlspecialchars($issue->task); ?></td>
 	</tr>
 	<tr>
 		<th>State:</th>
@@ -27,6 +27,6 @@
 	</tr>
 	<tr>
 		<th>Description:</th>
-		<td><?php echo $issue->description; ?></td>
+		<td class="issue-description"><pre><?php echo htmlspecialchars($issue->description); ?></pre></td>
 	</tr>
 </table>

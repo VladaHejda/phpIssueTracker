@@ -12,6 +12,8 @@ $tables_prefix = '';
 $tasksLimit = 20;
 $maxCreatePerDay = 5;
 $template = 'default';
+$predefinedDescription = '';
+
 
 $backLink = '/';
 $projectTitle = '';

@@ -54,7 +54,7 @@
 			<td><?php echo $n; ?>.</td>
 			<td><?php echo $task->updated->format('d.m.Y H:i'); ?></td>
 			<td class="issue-state-<?php echo $task->state; ?>"><?php echo $task->state; ?></td>
-			<td><a href="<?php echo linkTo(array('issue' => $task->id)); ?>"><?php echo $task->task; ?></a></td>
+			<td><a href="<?php echo linkTo(array('issue' => $task->id)); ?>"><?php echo htmlspecialchars($task->task); ?></a></td>
 			<td class="tasks-list-labels">
 				<ul>
 				<?php foreach ($task->labels as $label) { ?>

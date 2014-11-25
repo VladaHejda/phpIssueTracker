@@ -8,13 +8,16 @@
 	<table class="block issue-new-main">
 		<tr>
 			<th><label for="task">Task name:</label></th>
-			<td><input type="text" name="task" id="task" class="issue-new-task" required></td>
+			<td><input type="text" name="task" id="task" class="issue-new-task" required value="<?php
+				echo !empty($_POST['task']) ? htmlspecialchars($_POST['task']) : '';?>"></td>
 		</tr>
 
 		<tr>
 			<th><label for="description">Description:</label></th>
 			<td>
-				<textarea name="description" id="description" class="issue-new-description" required></textarea>
+				<textarea name="description" id="description" class="issue-new-description" required><?php
+					echo !empty($_POST['description']) ? htmlspecialchars($_POST['description'])
+						: htmlspecialchars($predefinedDescription) ; ?></textarea>
 			</td>
 		</tr>
 	</table>
@@ -23,7 +26,8 @@
 		<?php foreach ($labels as $label) { ?>
 			<li style="color: #<?php echo $label->color;?>;" class="list label-<?php echo $label->label; ?>">
 				<label>
-					<input type="checkbox" name="label[]" value="<?php echo $label->id; ?>">
+					<input type="checkbox" name="label[]" value="<?php echo $label->id; ?>"<?php
+						echo (!empty($_POST['label']) && in_array($label->id, $_POST['label'])) ? ' checked' : ''; ?>>
 					<?php echo $label->label; ?>
 				</label>
 			</li>
