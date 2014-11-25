@@ -1,10 +1,13 @@
 <?php
 
-if (!file_exists(__DIR__ . '/../config.php')) {
-	die ('Create "config.php" due to instructions.');
+if (!defined('CONFIG_FILE')) {
+	die ('Please, define "CONFIG_FILE" constant with path to configuration file.');
+}
+if (!file_exists(CONFIG_FILE)) {
+	die ('Configuration file defined in "CONFIG_FILE" constant does not exist.');
 }
 
-require __DIR__ . '/../config.php';
+require CONFIG_FILE;
 
 $pdo = new PDO($dsn, $login, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
