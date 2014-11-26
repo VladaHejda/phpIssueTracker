@@ -11,6 +11,7 @@ $tables_prefix = '';
 
 $tasksLimit = 20;
 $maxCreatePerDay = 5;
+$maxEmailsSubmission = 3;
 $template = 'default';
 $predefinedDescription = '';
 
