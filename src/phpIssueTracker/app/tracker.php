@@ -14,6 +14,9 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 $pdo->query("SET NAMES 'utf8'");
 
+
+class FormException extends Exception {}
+
 function linkTo(array $add = null, array $strip = array()) {
 	$get = $_GET;
 	if (is_array($add)) {
@@ -23,6 +26,19 @@ function linkTo(array $add = null, array $strip = array()) {
 		$get = array_diff_key($get, array_flip($strip));
 	}
 	return sprintf('?%s', http_build_query($get));
+}
+
+function checkMail($mail) {
+	return (bool) preg_match('/^[^@]+@[^@.]+\.[^@]+$/i', $mail);
+}
+
+// bot protection
+function protect() {
+	if (!empty($_POST['protect']) || empty($_SERVER['REMOTE_ADDR'])) {
+		header(' ', null, 403);
+		echo 'Forbidden.';
+		exit;
+	}
 }
 
 $title = (empty($projectTitle) ? '' : "{$projectTitle} ") . 'PHP Issue Tracker';

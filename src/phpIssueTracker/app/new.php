@@ -1,21 +1,13 @@
 <?php
 
-class FormException extends Exception {}
-
 $labels = $pdo->query("SELECT id, label, color FROM {$tables_prefix}labels")->fetchAll();
 
-$error = false;
-$errorMessage = '';
+$errorMessage = null;
 
 if (isset($_POST['create'])) {
 
 	try {
-		// bot protection
-		if (!empty($_POST['protect']) || empty($_SERVER['REMOTE_ADDR'])) {
-			header(' ', null, 403);
-			echo 'Forbidden.';
-			exit;
-		}
+		protect();
 
 		// max creation limit prevention
 		$ip = ip2long($_SERVER['REMOTE_ADDR']);
@@ -37,19 +29,32 @@ if (isset($_POST['create'])) {
 
 		$pdo->beginTransaction();
 
-		$statement = $pdo->prepare("INSERT INTO {$tables_prefix}tasks SET task = ?, description = ?, creator_ipv4 = ?");
+		$statement = $pdo->prepare("INSERT INTO {$tables_prefix}tasks
+			SET task = ?, description = ?, creator_ipv4 = ?");
 		$statement->execute(array($task, $description, $ip));
 
 		$taskId = $pdo->query('SELECT LAST_INSERT_ID()')->fetchColumn();
 
 		$queryBits = array();
-		foreach ((array) $_POST['label'] as $labelId) {
+		foreach ((array) @$_POST['label'] as $labelId) {
 			$queryBits[] = sprintf('(%d, %d)', $taskId, (int) $labelId);
 		}
 
+		// labels
 		if (!empty($queryBits)) {
 			$queryBits = implode(', ', $queryBits);
 			$pdo->query("INSERT INTO {$tables_prefix}tasks_labels (task_id, label_id) VALUES {$queryBits}");
+		}
+
+		// notifications
+		$mail = trim($_POST['mail']) ?: null;
+		if ($mail) {
+			if (!checkMail($mail)) {
+				throw new FormException('Invalid e-mail address.');
+			}
+			$statement = $pdo->prepare("INSERT INTO {$tables_prefix}tasks_notify (task_id, email, ipv4)
+				VALUES (?, ?, ?)");
+			$statement->execute(array($taskId, $mail, $ip));
 		}
 
 		$pdo->commit();
@@ -58,7 +63,6 @@ if (isset($_POST['create'])) {
 		exit;
 
 	} catch (FormException $e) {
-		$error = true;
 		$errorMessage = $e->getMessage();
 	}
 }

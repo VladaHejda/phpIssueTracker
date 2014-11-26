@@ -11,7 +11,9 @@
 		table th { text-align: left; }
 		h1 a { text-decoration: none; color: #aa778b; }
 		.protect { display: none; }
-		.error { color: #900; }
+		.error, .success { color: #fff; font-weight: bold; padding: 0 5px; }
+		.error { background: #900; }
+		.success { background: #090; }
 		.heading { color: #8929aa; }
 		.block { float: left; clear: left; margin-top: 15px; }
 		.block-prefix { float: left; width: 60px; font-size: 1.2em; }
@@ -35,10 +37,13 @@
 		.paginator li.selected .paginator-anchor {  background: #ccc; color: #000; }
 		.issue-detail th { vertical-align: top; }
 		.issue-description { font-family: "Courier New", Courier; }
-		.issue-new-main th, .issue-new-main td { border: none; }
-		.issue-new-main th { vertical-align: top; }
-		.issue-new-task, .issue-new-description { width: 400px; border: 1px solid #aaa; }
+		.common-form-main th, .common-form-main td { border: none; vertical-align: top; }
+		.common-form input[type=text], .common-form input[type=password], .common-form textarea {
+			border: 1px solid #aaa; }
+		.issue-new-task, .issue-new-description { width: 400px; }
 		.issue-new-description { height: 80px; }
+		.issue-new-mail { width: 150px; }
+		.form-common-extra { color: #755; }
 	</style>
 </head>
 <body>
