@@ -18,3 +18,7 @@ $predefinedDescription = '';
 $backLink = '/';
 $projectTitle = '';
 $notificationsEmail = '';
+$adminPasswordVerifier = function($password) {
+	return md5($password) === 'give md5 of your password';
+};
+$adminLoginMaxAttempts = 3;

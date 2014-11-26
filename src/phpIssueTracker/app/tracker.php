@@ -1,5 +1,11 @@
 <?php
 
+if (empty($_SERVER['REMOTE_ADDR'])) {
+	header(' ', null, 403);
+	echo 'Forbidden.';
+	exit;
+}
+
 if (!defined('CONFIG_FILE')) {
 	die ('Please, define "CONFIG_FILE" constant with path to configuration file.');
 }
@@ -34,7 +40,7 @@ function checkMail($mail) {
 
 // bot protection
 function protect() {
-	if (!empty($_POST['protect']) || empty($_SERVER['REMOTE_ADDR'])) {
+	if (!empty($_POST['protect'])) {
 		header(' ', null, 403);
 		echo 'Forbidden.';
 		exit;
@@ -48,6 +54,12 @@ function sendMail($from, $to, $subject, $body) {
 
 $title = (empty($projectTitle) ? '' : "{$projectTitle} ") . 'PHP Issue Tracker';
 
+session_start();
+if (isset($_GET['logout'])) {
+	unset($_SESSION['admin']);
+}
+$administrator = isset($_SESSION['admin']) && $_SESSION['admin'];
+
 if (!empty($_GET['issue'])) {
 	$view = 'issue';
 	require __DIR__ . '/issue.php';
@@ -55,6 +67,14 @@ if (!empty($_GET['issue'])) {
 } elseif (isset($_GET['new'])) {
 	$view = 'new';
 	require __DIR__ . '/new.php';
+
+} elseif (isset($_GET['admin'])) {
+	if ($administrator) {
+		$view = 'admin';
+	} else {
+		$view = 'adminLogin';
+	}
+	require __DIR__ . '/admin.php';
 
 } else {
 	$view = 'list';

@@ -8,7 +8,10 @@ CREATE TABLE tasks (
 	creator_ipv4 INT(1) SIGNED NOT NULL,
 	PRIMARY KEY (id),
 	INDEX (task),
-	INDEX (updated)
+	INDEX (state),
+	INDEX (updated),
+	INDEX (creator_ipv4),
+	INDEX (created)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE labels (
@@ -34,7 +37,15 @@ CREATE TABLE tasks_notify (
 	ipv4 INT(1) SIGNED NOT NULL,
 	PRIMARY KEY (notify_id),
 	UNIQUE (task_id, email),
+	INDEX (email),
+	INDEX (ipv4),
 	FOREIGN KEY (task_id) REFERENCES tasks (id) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE admin_logins (
+	time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	ipv4 INT(1) SIGNED NOT NULL,
+	INDEX (ipv4)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO labels (label, color) VALUES

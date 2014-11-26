@@ -30,7 +30,8 @@
 		.state-list .list a { display: block; color: #000; text-decoration: none; padding: 3px 10px; }
 		.tasks-list-empty { font-style: italic; color: #900; font-weight: bold; }
 		footer { float: left; margin-top: 20px; width: 100%; }
-		.footer-copyright { float: right; }
+		.footer-links { float: right; }
+		.footer-links li { float: left; list-style: none; margin-left: 20px; }
 		.paginator .list { list-style: none; float: left; margin-right: 5px; font-weight: bold; }
 		.paginator .list .paginator-anchor { display: block; padding: 3px 5px; text-decoration: none;
 			background: #000; color: #fff; }
@@ -71,9 +72,19 @@
 </main>
 
 <footer>
-	<div class="footer-copyright">
-		<a href="https://github.com/VladaHejda/phpIssueTracker" target="_blank">PHP Issue Tracker</a>
-	</div>
+	<ul class="footer-links">
+		<li>
+			<a href="?admin">Admin</a>
+		</li>
+		<?php if ($administrator) { ?>
+		<li>
+			<a href="?logout">Log out</a>
+		</li>
+		<?php } ?>
+		<li>
+			<a href="https://github.com/VladaHejda/phpIssueTracker" target="_blank">PHP Issue Tracker</a>
+		</li>
+	</ul>
 </footer>
 
 </body>
