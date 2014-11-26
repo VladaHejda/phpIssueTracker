@@ -28,10 +28,24 @@ if ($administrator) {
 				throw new FormException('Label must contain only alphanumeric characters.');
 			}
 
-			$color = trim($_POST['color']);
-			if (!preg_match('/^[0-9a-f]{6}$/i', $color)) {
-				throw new FormException('Invalid color.');
+			$color = '';
+			foreach (array('red', 'green', 'blue') as $channel) {
+				$percent = trim($_POST[$channel]);
+				if (!ctype_digit($percent)) {
+					throw new FormException(sprintf('Color channel %s is invalid.', $channel));
+				}
+				$percent = (int) $percent;
+				if ($percent < 0 || $percent > 100) {
+					throw new FormException(sprintf('Color channel %s is out of range.', $channel));
+				}
+				$byte = round(255 * ($percent / 100));
+				$hex = dechex($byte);
+				if (strlen($hex) == 1) {
+					$hex = "0{$hex}";
+				}
+				$color .= $hex;
 			}
+			echo $color;
 
 			try {
 				$statement = $pdo->prepare("INSERT INTO {$tables_prefix}labels (label, color) VALUES (?, ?)");

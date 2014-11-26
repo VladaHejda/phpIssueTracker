@@ -29,10 +29,14 @@
 		</tr>
 
 		<tr>
-			<th><label for="color">Color (HEX):</label></th>
+			<th><label for="color">Color (%):</label></th>
 			<td colspan="2">
-				<input type="text" name="color" id="color" class="issue-new-color" value="<?php
-				echo !empty($_POST['color']) ? htmlspecialchars($_POST['color']) : '000000';?>">
+				<label style="color: #900;">Red: <input type="text" name="red" id="red" class="issue-new-color" size="2" value="<?php
+				echo !empty($_POST['red']) ? htmlspecialchars($_POST['red']) : '50';?>"></label>
+				<label style="color: #090;">Green: <input type="text" name="green" id="green" class="issue-new-color" size="2" value="<?php
+				echo !empty($_POST['green']) ? htmlspecialchars($_POST['green']) : '50';?>"></label>
+				<label style="color: #009;">Blue: <input type="text" name="blue" id="blue" class="issue-new-color" size="2" value="<?php
+				echo !empty($_POST['blue']) ? htmlspecialchars($_POST['blue']) : '50';?>"></label>
 			</td>
 		</tr>
 	</table>
