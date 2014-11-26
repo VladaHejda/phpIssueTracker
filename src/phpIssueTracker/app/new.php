@@ -59,6 +59,14 @@ if (isset($_POST['create'])) {
 
 		$pdo->commit();
 
+		if (!empty($notificationsEmail) && checkMail($notificationsEmail)) {
+			$body = $task . "\n\n" . $description . "\n\n" . sprintf('http://%s?issue=%d',
+				$_SERVER['HTTP_HOST'] . preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']), $taskId)
+				. "\n";
+			sendMail(sprintf('noreply@%s', $_SERVER['HTTP_HOST']), $notificationsEmail,
+				sprintf('%sNew issue submitted', $projectTitle ? "{$projectTitle} " : ''), $body);
+		}
+
 		header(sprintf('Location: ?issue=%d', $taskId), null, 303);
 		exit;
 

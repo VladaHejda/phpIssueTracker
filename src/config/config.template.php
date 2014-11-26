@@ -14,6 +14,6 @@ $maxCreatePerDay = 5;
 $template = 'default';
 $predefinedDescription = '';
 
-
 $backLink = '/';
 $projectTitle = '';
+$notificationsEmail = '';

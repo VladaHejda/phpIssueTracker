@@ -41,6 +41,11 @@ function protect() {
 	}
 }
 
+function sendMail($from, $to, $subject, $body) {
+	return mail($to, $subject, $body,
+		"MIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\nFrom: {$from}");
+}
+
 $title = (empty($projectTitle) ? '' : "{$projectTitle} ") . 'PHP Issue Tracker';
 
 if (!empty($_GET['issue'])) {
