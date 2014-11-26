@@ -16,11 +16,11 @@
 		.success { background: #090; }
 		.heading { color: #8929aa; }
 		.block { float: left; clear: left; margin-top: 15px; }
-		.block-prefix { float: left; width: 60px; font-size: 1.2em; }
+		.block-prefix { float: left; width: 70px; font-size: 1.2em; }
 		.block-content { float: left; }
 		.block-content .selected { border: solid 2px #f00; }
 		.labels-list .list { float: left; margin-right: 5px; list-style: none; }
-		.labels-list .list a { display: block; color: #fff; text-decoration: none; padding: 3px 10px; }
+		.labels-list .list .anchor { display: block; color: #fff; text-decoration: none; padding: 3px 10px; }
 		.tasks-list-labels .list { float: left; margin-right: 5px; list-style: none; font-weight: bold; }
 		.issue-state-new { background: #fa0; }
 		.issue-state-waiting { background: #ff0; }

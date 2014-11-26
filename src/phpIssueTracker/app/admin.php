@@ -10,8 +10,46 @@ $statement->execute(array($ipLong));
 $attemptsCount = $adminLoginMaxAttempts - $statement->fetchColumn();
 
 if ($administrator) {
+	try {
+		if (!empty($_POST['labelDelete'])) {
+			$labelId = (int) key($_POST['labelDelete']);
+			try {
+				$statement = $pdo->prepare("DELETE FROM {$tables_prefix}labels WHERE id = ?");
+				$statement->execute(array($labelId));
+			} catch (PDOException $e) {
+				if ((int) $e->getCode() === 23000) {
+					throw new FormException('Label is in use and cannot be deleted.');
+				}
+			}
+
+		} elseif (!empty($_POST['labelAdd'])) {
+			$label = trim($_POST['label']);
+			if (!preg_match('/^[a-z0-9 _-]+$/i', $label)) {
+				throw new FormException('Label must contain only alphanumeric characters.');
+			}
+
+			$color = trim($_POST['color']);
+			if (!preg_match('/^[0-9a-f]{6}$/i', $color)) {
+				throw new FormException('Invalid color.');
+			}
+
+			try {
+				$statement = $pdo->prepare("INSERT INTO {$tables_prefix}labels (label, color) VALUES (?, ?)");
+				$statement->execute(array($label, $color));
+			} catch (PDOException $e) {
+				if ((int) $e->getCode() === 23000) {
+					throw new FormException('Label already exists.');
+				}
+			}
+		}
+	} catch (FormException $e) {
+		$errorMessage = $e->getMessage();
+	}
+
+	$labels = $pdo->query("SELECT id, label, color FROM {$tables_prefix}labels")->fetchAll();
 
 
+// login
 } elseif ($attemptsCount > 0 && isset($_POST['login'])) {
 
 	if (!$adminPasswordVerifier($_POST['password'])) {

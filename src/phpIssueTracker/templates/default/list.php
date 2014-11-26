@@ -10,7 +10,7 @@
 	<ul class="block-content labels-list">
 	<?php foreach ($labels as $label) { ?>
 		<li class="list<?php echo isSelected('label', $label->label) ? ' selected' : ''; ?>" style="background: #<?php echo $label->color; ?>;">
-			<a href="<?php echo renderListQuery('label', $label->label); ?>">
+			<a class="anchor" href="<?php echo renderListQuery('label', $label->label); ?>">
 				<span><?php echo $label->label; ?></span>
 			</a>
 		</li>
