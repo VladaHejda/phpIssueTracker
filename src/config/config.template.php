@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copy this file as "config.php" and fill you credentials, eventually customize.
+ * Copy this file as "config.php" and fill your credentials, eventually customize.
  */
 
 $dsn = 'mysql:host=localhost;dbname=issues';
