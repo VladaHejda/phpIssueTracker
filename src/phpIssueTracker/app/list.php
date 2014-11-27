@@ -64,14 +64,14 @@ $count = $statement->fetchColumn();
 $page = $pagesCount = 1;
 if ($count) {
 	$offset = 0;
-	if ($count > $tasksLimit) {
+	if ($count > $tasksLimitPerPage) {
 		$page = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
-		$offset = ($page -1) * $tasksLimit;
-		$pagesCount = ceil($count / $tasksLimit);
+		$offset = ($page -1) * $tasksLimitPerPage;
+		$pagesCount = ceil($count / $tasksLimitPerPage);
 	}
 
 	$statement = $pdo->prepare(sprintf($query, "{$tablesPrefix}tasks.id, task, state, updated",
-		sprintf("GROUP BY {$tablesPrefix}tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d", $tasksLimit, $offset)));
+		sprintf("GROUP BY {$tablesPrefix}tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d", $tasksLimitPerPage, $offset)));
 	$statement->execute($args);
 	$tasks = $statement->fetchAll();
 	foreach ($tasks as & $task) {

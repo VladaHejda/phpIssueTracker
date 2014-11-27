@@ -15,7 +15,7 @@ if (isset($_POST['create'])) {
 			AND DATE(created) = DATE(NOW())");
 		$statement->execute(array($ip));
 		$createdToday = $statement->fetchColumn();
-		if ($createdToday >= $maxCreatePerDay) {
+		if ($createdToday >= $maxIssuesCreatedPerDay) {
 			header(' ', null, 403);
 			echo 'You have created too many issues per today.';
 			exit;

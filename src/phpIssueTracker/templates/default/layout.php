@@ -51,8 +51,8 @@
 
 <header>
 
-	<?php if ($backLink) { ?>
-		<div class="block backlink"><a href="<?php echo $backLink; ?>">
+	<?php if ($projectBackLink) { ?>
+		<div class="block backlink"><a href="<?php echo $projectBackLink; ?>">
 			<?php if ($projectTitle) {
 				echo sprintf('back to %s', $projectTitle);
 			} else { ?>

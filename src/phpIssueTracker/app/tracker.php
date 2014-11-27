@@ -15,7 +15,7 @@ if (!file_exists(CONFIG_FILE)) {
 
 require CONFIG_FILE;
 
-$pdo = new PDO($dsn, $login, $password);
+$pdo = new PDO($dsn, $dbLogin, $dbPassword);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 $pdo->query("SET NAMES 'utf8'");
@@ -81,4 +81,4 @@ if (!empty($_GET['issue'])) {
 	require __DIR__ . '/list.php';
 }
 
-require __DIR__ . '/../templates/' . $template .'/layout.php';
+require __DIR__ . '/../templates/' . $htmlTemplate .'/layout.php';

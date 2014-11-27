@@ -5,19 +5,19 @@
  */
 
 $dsn = 'mysql:host=localhost;dbname=issues';
-$login = '';
-$password = '';
+$dbLogin = '';
+$dbPassword = '';
 $tablesPrefix = '';
 
-$tasksLimit = 20;
-$maxCreatePerDay = 5;
-$maxEmailsSubmission = 3;
-$template = 'default';
+$htmlTemplate = 'default';
+$tasksLimitPerPage = 20;
+$maxIssuesCreatedPerDay = 5;
+$maxEmailsSubmission = 3; // per IP for entire time
 $predefinedDescription = '';
 
-$backLink = '/';
+$projectBackLink = '/';
 $projectTitle = '';
-$notificationsEmail = '';
+$notificationsEmail = ''; // notifies new issues, comments, etc.
 $adminPasswordVerifier = function($password) {
 	return md5($password) === 'give md5 of your password';
 };
