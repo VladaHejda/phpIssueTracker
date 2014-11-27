@@ -50,14 +50,14 @@ if (!empty($conditions)) {
 	$conditions = sprintf('WHERE %s', $conditions);
 }
 
-$labels = $pdo->query("SELECT label, color FROM {$tables_prefix}labels")->fetchAll();
+$labels = $pdo->query("SELECT label, color FROM {$tablesPrefix}labels")->fetchAll();
 
-$query = "SELECT %s FROM {$tables_prefix}tasks
-	LEFT JOIN {$tables_prefix}tasks_labels ON ({$tables_prefix}tasks.id = {$tables_prefix}tasks_labels.task_id)
-	LEFT JOIN {$tables_prefix}labels ON ({$tables_prefix}tasks_labels.label_id = {$tables_prefix}labels.id)
+$query = "SELECT %s FROM {$tablesPrefix}tasks
+	LEFT JOIN {$tablesPrefix}tasks_labels ON ({$tablesPrefix}tasks.id = {$tablesPrefix}tasks_labels.task_id)
+	LEFT JOIN {$tablesPrefix}labels ON ({$tablesPrefix}tasks_labels.label_id = {$tablesPrefix}labels.id)
 	{$conditions} %s";
 
-$statement = $pdo->prepare(sprintf($query, "COUNT(DISTINCT {$tables_prefix}tasks.id)", ''));
+$statement = $pdo->prepare(sprintf($query, "COUNT(DISTINCT {$tablesPrefix}tasks.id)", ''));
 $statement->execute($args);
 $count = $statement->fetchColumn();
 
@@ -70,13 +70,13 @@ if ($count) {
 		$pagesCount = ceil($count / $tasksLimit);
 	}
 
-	$statement = $pdo->prepare(sprintf($query, "{$tables_prefix}tasks.id, task, state, updated",
-		sprintf("GROUP BY {$tables_prefix}tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d", $tasksLimit, $offset)));
+	$statement = $pdo->prepare(sprintf($query, "{$tablesPrefix}tasks.id, task, state, updated",
+		sprintf("GROUP BY {$tablesPrefix}tasks.id ORDER BY updated DESC LIMIT %d OFFSET %d", $tasksLimit, $offset)));
 	$statement->execute($args);
 	$tasks = $statement->fetchAll();
 	foreach ($tasks as & $task) {
-		$statement = $pdo->prepare("SELECT label, color FROM {$tables_prefix}tasks_labels
-			LEFT JOIN {$tables_prefix}labels ON ({$tables_prefix}tasks_labels.label_id = {$tables_prefix}labels.id)
+		$statement = $pdo->prepare("SELECT label, color FROM {$tablesPrefix}tasks_labels
+			LEFT JOIN {$tablesPrefix}labels ON ({$tablesPrefix}tasks_labels.label_id = {$tablesPrefix}labels.id)
 			WHERE task_id = ?");
 		$statement->execute(array($task->id));
 		$task->labels = $statement->fetchAll();

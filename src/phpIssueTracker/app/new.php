@@ -1,6 +1,6 @@
 <?php
 
-$labels = $pdo->query("SELECT id, label, color FROM {$tables_prefix}labels")->fetchAll();
+$labels = $pdo->query("SELECT id, label, color FROM {$tablesPrefix}labels")->fetchAll();
 
 $errorMessage = null;
 
@@ -11,7 +11,7 @@ if (isset($_POST['create'])) {
 
 		// max creation limit prevention
 		$ip = ip2long($_SERVER['REMOTE_ADDR']);
-		$statement = $pdo->prepare("SELECT COUNT(*) FROM {$tables_prefix}tasks WHERE creator_ipv4 = ?
+		$statement = $pdo->prepare("SELECT COUNT(*) FROM {$tablesPrefix}tasks WHERE creator_ipv4 = ?
 			AND DATE(created) = DATE(NOW())");
 		$statement->execute(array($ip));
 		$createdToday = $statement->fetchColumn();
@@ -29,7 +29,7 @@ if (isset($_POST['create'])) {
 
 		$pdo->beginTransaction();
 
-		$statement = $pdo->prepare("INSERT INTO {$tables_prefix}tasks
+		$statement = $pdo->prepare("INSERT INTO {$tablesPrefix}tasks
 			SET task = ?, description = ?, creator_ipv4 = ?");
 		$statement->execute(array($task, $description, $ip));
 
@@ -43,7 +43,7 @@ if (isset($_POST['create'])) {
 		// labels
 		if (!empty($queryBits)) {
 			$queryBits = implode(', ', $queryBits);
-			$pdo->query("INSERT INTO {$tables_prefix}tasks_labels (task_id, label_id) VALUES {$queryBits}");
+			$pdo->query("INSERT INTO {$tablesPrefix}tasks_labels (task_id, label_id) VALUES {$queryBits}");
 		}
 
 		// notifications
@@ -52,7 +52,7 @@ if (isset($_POST['create'])) {
 			if (!checkMail($mail)) {
 				throw new FormException('Invalid e-mail address.');
 			}
-			$statement = $pdo->prepare("INSERT INTO {$tables_prefix}tasks_notify (task_id, email, ipv4)
+			$statement = $pdo->prepare("INSERT INTO {$tablesPrefix}tasks_notify (task_id, email, ipv4)
 				VALUES (?, ?, ?)");
 			$statement->execute(array($taskId, $mail, $ip));
 		}

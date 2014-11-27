@@ -5,7 +5,7 @@ $ip = $_SERVER['REMOTE_ADDR'];
 $errorMessage = '';
 $ipLong = ip2long($ip);
 
-$statement = $pdo->prepare("SELECT COUNT(*) FROM {$tables_prefix}admin_logins WHERE ipv4 = ?");
+$statement = $pdo->prepare("SELECT COUNT(*) FROM {$tablesPrefix}admin_logins WHERE ipv4 = ?");
 $statement->execute(array($ipLong));
 $attemptsCount = $adminLoginMaxAttempts - $statement->fetchColumn();
 
@@ -14,7 +14,7 @@ if ($administrator) {
 		if (!empty($_POST['labelDelete'])) {
 			$labelId = (int) key($_POST['labelDelete']);
 			try {
-				$statement = $pdo->prepare("DELETE FROM {$tables_prefix}labels WHERE id = ?");
+				$statement = $pdo->prepare("DELETE FROM {$tablesPrefix}labels WHERE id = ?");
 				$statement->execute(array($labelId));
 			} catch (PDOException $e) {
 				if ((int) $e->getCode() === 23000) {
@@ -48,7 +48,7 @@ if ($administrator) {
 			echo $color;
 
 			try {
-				$statement = $pdo->prepare("INSERT INTO {$tables_prefix}labels (label, color) VALUES (?, ?)");
+				$statement = $pdo->prepare("INSERT INTO {$tablesPrefix}labels (label, color) VALUES (?, ?)");
 				$statement->execute(array($label, $color));
 			} catch (PDOException $e) {
 				if ((int) $e->getCode() === 23000) {
@@ -60,7 +60,7 @@ if ($administrator) {
 		$errorMessage = $e->getMessage();
 	}
 
-	$labels = $pdo->query("SELECT id, label, color FROM {$tables_prefix}labels")->fetchAll();
+	$labels = $pdo->query("SELECT id, label, color FROM {$tablesPrefix}labels")->fetchAll();
 
 
 // login
@@ -69,11 +69,11 @@ if ($administrator) {
 	if (!$adminPasswordVerifier($_POST['password'])) {
 		$errorMessage = 'Wrong password.';
 		--$attemptsCount;
-		$statement = $pdo->prepare("INSERT INTO {$tables_prefix}admin_logins (ipv4) VALUES (?)");
+		$statement = $pdo->prepare("INSERT INTO {$tablesPrefix}admin_logins (ipv4) VALUES (?)");
 		$statement->execute(array($ipLong));
 
 	} else {
-		$statement = $pdo->prepare("DELETE FROM {$tables_prefix}admin_logins WHERE ipv4 = ?");
+		$statement = $pdo->prepare("DELETE FROM {$tablesPrefix}admin_logins WHERE ipv4 = ?");
 		$statement->execute(array($ipLong));
 		$_SESSION['admin'] = true;
 		header('Location: ?admin', null, 303);
