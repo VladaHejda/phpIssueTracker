@@ -52,7 +52,7 @@ function sendMail($from, $to, $subject, $body) {
 		"MIME-Version: 1.0\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\nFrom: {$from}");
 }
 
-$title = (empty($projectTitle) ? '' : "{$projectTitle} ") . 'PHP Issue Tracker';
+$title = (empty($projectTitle) ? '' : "{$projectTitle} ") . ' Issue Tracker';
 
 session_start();
 if (isset($_GET['logout'])) {

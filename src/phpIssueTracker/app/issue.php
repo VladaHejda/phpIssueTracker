@@ -53,7 +53,7 @@ if (isset($_POST['ok'])) {
 				$distinctEmails = $statement->fetchColumn();
 				if ($distinctEmails >= $maxEmailsSubmission) {
 					header(' ', null, 403);
-					echo 'You have submitted too many different e-mail addresses from you IP.';
+					echo 'You have submitted too many different e-mail addresses from your IP.';
 					exit;
 				}
 			}
